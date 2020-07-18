@@ -1,23 +1,21 @@
-const puppeteer = require('puppeteer')
-const sessionFactory = require('./factories/sessionFactory')
-const userFactory = require('./factories/userFactory')
+const Page = require('./helpers/page')
 
-let browser, page
+let page
 
 beforeEach(async () => {
-  browser = await puppeteer.launch({ headless: false })
-  page = await browser.newPage()
+  page = await Page.build()
   await page.goto('localhost:3000')
 })
 
 afterEach(async () => {
-  await browser.close()
+  await page.close()
 })
 
 
 it('should have the correct text', async () => {
-  const text = await page.$eval('a.brand-logo', el => el.innerHTML)
-  expect(text).toEqual('Blogster')
+  expect(await page
+    .getTextOf('a.brand-logo'))
+    .toEqual('Blogster')
 })
 
 it(`should start oauth flow when login link clicked`, async () => {
@@ -27,14 +25,9 @@ it(`should start oauth flow when login link clicked`, async () => {
 })
 
 it(`should show logout button when signed in`, async () => {
-  // const user = `5f0d1a2af60cf8c0ae3fcfd5`
-  const user = await userFactory()
-  const { session, sig } = sessionFactory(user)
-  await page.setCookie(
-    { name: 'session', value: session },
-    { name: 'session.sig', value: sig })
-  await page.reload()
-  await page.waitFor('a[href="/auth/logout"]')
-  const text = await page.$eval('a[href="/auth/logout"]', el => el.innerHTML)
-  expect(text).toBe('Logout')
+  await page.login()
+  expect(await page
+    .getTextOf('a[href="/auth/logout"]'))
+    .toBe('Logout')
 })
+

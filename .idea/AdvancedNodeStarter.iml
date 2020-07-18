@@ -12,5 +12,7 @@
     <orderEntry type="library" name="@types/jest" level="application" />
     <orderEntry type="library" name="@types/react" level="application" />
     <orderEntry type="library" name="@types/redis" level="application" />
+    <orderEntry type="library" name="@types/jest" level="application" />
+    <orderEntry type="library" name="@types/express" level="application" />
   </component>
 </module>

@@ -7,7 +7,10 @@ class Page {
     this.page = page
   }
   static async build() {
-    const browser = await puppeteer.launch({ headless: false })
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: [`--no-sandbox`]
+    })
     const page = await browser.newPage()
     const customPage = new Page(page)
     return new Proxy(customPage, {

@@ -9,7 +9,7 @@ class BlogShow extends Component {
 
   renderImage() {
     const { imageURL } = this.props.blog
-    return imageURL && <img height="268" width="400" src={`https://ke-blog-bucket.s3.amazonaws.com/${imageURL}`} alt="blog image" />
+    return imageURL && <img height="268" width="400" src={`https://ke-blog-bucket.s3.amazonaws.com/${imageURL}`} alt="blog" />
   }
   
   render() {
